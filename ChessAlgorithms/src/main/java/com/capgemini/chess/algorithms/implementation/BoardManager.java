@@ -234,7 +234,8 @@ public class BoardManager {
 	private Move validateMove(Coordinate from, Coordinate to) throws InvalidMoveException, KingInCheckException {
 
 		// TODO please add implementation here
-		return null;
+		Validator validator = new Validator(from, to, this.board, calculateNextMoveColor());
+		return validator.validate();
 	}
 
 	private boolean isKingInCheck(Color kingColor) {

@@ -38,4 +38,17 @@ public class ValidatorTest {
 		// when
 		validator.validate();
 	}
+	
+	@Test(expected = InvalidMoveException.class)
+	public void myPieceIsOnToTest() throws InvalidMoveException {
+		// given
+		List<Move> moves = new ArrayList<>();
+		BoardManager boardManager = new BoardManager(moves);
+		Coordinate from = new Coordinate(0, 0);
+		Coordinate to = new Coordinate(0, 1);
+		Validator validator = new Validator(from, to, boardManager.getBoard(), Color.WHITE);
+
+		// when
+		validator.validate();
+	}
 }

@@ -20,9 +20,11 @@ public class ValidatorTest {
 		BoardManager boardManager = new BoardManager(moves);
 		Coordinate from = new Coordinate(0, 6);
 		Coordinate to = new Coordinate(0, 5);
+		
+		//when
 		Validator validator = new Validator(from, to, boardManager.getBoard(), Color.WHITE);
 
-		// when
+		// then
 		validator.validate();
 	}
 	
@@ -33,9 +35,11 @@ public class ValidatorTest {
 		BoardManager boardManager = new BoardManager(moves);
 		Coordinate from = new Coordinate(0, 2);
 		Coordinate to = new Coordinate(0, 3);
+		
+		//when
 		Validator validator = new Validator(from, to, boardManager.getBoard(), Color.WHITE);
 
-		// when
+		// then
 		validator.validate();
 	}
 	
@@ -46,9 +50,11 @@ public class ValidatorTest {
 		BoardManager boardManager = new BoardManager(moves);
 		Coordinate from = new Coordinate(0, 0);
 		Coordinate to = new Coordinate(0, 1);
+		
+		//when
 		Validator validator = new Validator(from, to, boardManager.getBoard(), Color.WHITE);
 
-		// when
+		// then
 		validator.validate();
 	}
 }

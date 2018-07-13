@@ -33,7 +33,7 @@ public class Validator {
 	
 	private boolean isToNotOccupiedByMyPiece() throws CoordinateOccupiedByMyPieceException {
 		Piece piece = board.getPieceAt(this.to);
-		if(piece != null || piece.getColor() != this.actualPlayerColor) {
+		if(piece == null || piece.getColor() != this.actualPlayerColor) {
 			return true;
 		}
 		throw new CoordinateOccupiedByMyPieceException();

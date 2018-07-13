@@ -57,4 +57,19 @@ public class ValidatorTest {
 		// then
 		validator.validate();
 	}
+	
+	@Test(expected = InvalidMoveException.class)
+	public void coordinatesNotOnBoardTest() throws InvalidMoveException {
+		// given
+		List<Move> moves = new ArrayList<>();
+		BoardManager boardManager = new BoardManager(moves);
+		Coordinate from = new Coordinate(1, 0);
+		Coordinate to = new Coordinate(0, -1);
+		
+		//when
+		Validator validator = new Validator(from, to, boardManager.getBoard(), Color.WHITE);
+
+		// then
+		validator.validate();
+	}
 }

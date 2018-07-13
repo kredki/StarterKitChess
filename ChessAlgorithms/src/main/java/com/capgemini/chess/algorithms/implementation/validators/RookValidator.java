@@ -1,6 +1,7 @@
-package com.capgemini.chess.algorithms.implementation;
+package com.capgemini.chess.algorithms.implementation.validators;
 
 import com.capgemini.chess.algorithms.data.Move;
+import com.capgemini.chess.algorithms.implementation.Validator;
 import com.capgemini.chess.algorithms.implementation.exceptions.InvalidMoveException;
 
 public class RookValidator implements Validator {

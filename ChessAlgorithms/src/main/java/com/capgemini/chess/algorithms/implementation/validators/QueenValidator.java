@@ -1,11 +1,12 @@
-package com.capgemini.chess.algorithms.implementation;
+package com.capgemini.chess.algorithms.implementation.validators;
 
 import com.capgemini.chess.algorithms.data.Move;
+import com.capgemini.chess.algorithms.implementation.Validator;
 import com.capgemini.chess.algorithms.implementation.exceptions.InvalidMoveException;
 
-public class PawnValidator implements Validator {
+public class QueenValidator implements Validator {
 
-	public PawnValidator() {
+	public QueenValidator() {
 		// TODO Auto-generated constructor stub
 	}
 

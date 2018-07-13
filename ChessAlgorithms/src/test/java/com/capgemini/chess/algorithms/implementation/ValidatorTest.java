@@ -10,10 +10,10 @@ import org.junit.Test;
 import com.capgemini.chess.algorithms.data.Coordinate;
 import com.capgemini.chess.algorithms.data.Move;
 import com.capgemini.chess.algorithms.data.enums.Color;
-import com.capgemini.chess.algorithms.implementation.exceptions.InvalidMoveException;
+import com.capgemini.chess.algorithms.implementation.exceptions.*;
 
 public class ValidatorTest {
-	@Test(expected = InvalidMoveException.class)
+	@Test(expected = WrongPieceColorException.class)
 	public void wrongColorTest() throws InvalidMoveException {
 		// given
 		List<Move> moves = new ArrayList<>();
@@ -22,13 +22,13 @@ public class ValidatorTest {
 		Coordinate to = new Coordinate(0, 5);
 		
 		//when
-		Validator validator = new Validator(from, to, boardManager.getBoard(), Color.WHITE);
+		ValidationManager validator = new ValidationManager(from, to, boardManager.getBoard(), Color.WHITE);
 
 		// then
 		validator.validate();
 	}
 	
-	@Test(expected = InvalidMoveException.class)
+	@Test(expected = PieceNotThereException.class)
 	public void pieceNotThereTest() throws InvalidMoveException {
 		// given
 		List<Move> moves = new ArrayList<>();
@@ -37,13 +37,13 @@ public class ValidatorTest {
 		Coordinate to = new Coordinate(0, 3);
 		
 		//when
-		Validator validator = new Validator(from, to, boardManager.getBoard(), Color.WHITE);
+		ValidationManager validator = new ValidationManager(from, to, boardManager.getBoard(), Color.WHITE);
 
 		// then
 		validator.validate();
 	}
 	
-	@Test(expected = InvalidMoveException.class)
+	@Test(expected = CoordinateOccupiedByMyPieceException.class)
 	public void myPieceIsOnToTest() throws InvalidMoveException {
 		// given
 		List<Move> moves = new ArrayList<>();
@@ -52,13 +52,13 @@ public class ValidatorTest {
 		Coordinate to = new Coordinate(0, 1);
 		
 		//when
-		Validator validator = new Validator(from, to, boardManager.getBoard(), Color.WHITE);
+		ValidationManager validator = new ValidationManager(from, to, boardManager.getBoard(), Color.WHITE);
 
 		// then
 		validator.validate();
 	}
 	
-	@Test(expected = InvalidMoveException.class)
+	@Test(expected = CoordinateNotOnBoard.class)
 	public void coordinatesNotOnBoardTest() throws InvalidMoveException {
 		// given
 		List<Move> moves = new ArrayList<>();
@@ -67,7 +67,7 @@ public class ValidatorTest {
 		Coordinate to = new Coordinate(0, -1);
 		
 		//when
-		Validator validator = new Validator(from, to, boardManager.getBoard(), Color.WHITE);
+		ValidationManager validator = new ValidationManager(from, to, boardManager.getBoard(), Color.WHITE);
 
 		// then
 		validator.validate();

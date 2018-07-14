@@ -9,6 +9,8 @@ import com.capgemini.chess.algorithms.implementation.exceptions.InvalidMoveExcep
 public class CoordinatesValidator implements Validator {
 	private Coordinate from;
 	private Coordinate to;
+	private static final int MIN_RANGE_OUT_OF_BOARD = -1;
+	private static final int MAX_RANGE_OUT_OF_BOARD = 8;
 
 	public CoordinatesValidator(Coordinate from, Coordinate to) {
 		super();
@@ -36,7 +38,7 @@ public class CoordinatesValidator implements Validator {
 	}
 	
 	private boolean isInRange(int x) {
-		if(x < 8 && x > -1) {
+		if(x < MAX_RANGE_OUT_OF_BOARD && x > MIN_RANGE_OUT_OF_BOARD) {
 			return true;
 		} else {
 			return false;

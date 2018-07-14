@@ -26,10 +26,10 @@ public class ValidationManager {
 	}
 	
 	public Move validate() throws InvalidMoveException {
-		isCoordinatesOnBoard();
+		//isCoordinatesOnBoard();
 		validateIfPieceIsThere();
 		validatePieceColor();
-		isToNotOccupiedByMyPiece();
+		//isToNotOccupiedByMyPiece();
 		//bishop |xfrom - xto| == |yfrom - yto|
 		//king (xfrom - xto)*2 == (yfrom - yto)^2
 		return null;

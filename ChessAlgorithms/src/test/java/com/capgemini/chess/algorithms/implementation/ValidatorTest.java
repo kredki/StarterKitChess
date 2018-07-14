@@ -42,19 +42,4 @@ public class ValidatorTest {
 		// then
 		validator.validate();
 	}
-	
-	@Test(expected = CoordinateOccupiedByMyPieceException.class)
-	public void myPieceIsOnToTest() throws InvalidMoveException {
-		// given
-		List<Move> moves = new ArrayList<>();
-		BoardManager boardManager = new BoardManager(moves);
-		Coordinate from = new Coordinate(0, 0);
-		Coordinate to = new Coordinate(0, 1);
-		
-		//when
-		ValidationManager validator = new ValidationManager(from, to, boardManager.getBoard(), Color.WHITE);
-
-		// then
-		validator.validate();
-	}
 }

@@ -27,54 +27,11 @@ public class ValidationManager {
 	
 	public Move validate() throws InvalidMoveException {
 		//isCoordinatesOnBoard();
-		validateIfPieceIsThere();
+		//validateIfPieceIsThere();
 		//validatePieceColor();
 		//isToNotOccupiedByMyPiece();
 		//bishop |xfrom - xto| == |yfrom - yto|
 		//king (xfrom - xto)*2 == (yfrom - yto)^2
 		return null;
-	}
-	
-	private boolean isCoordinatesOnBoard() throws CoordinateNotOnBoard {
-		int xFrom = this.from.getX();
-		int yFrom = this.from.getY();
-		int xTo = this.to.getX();
-		int yTo = this.to.getY();
-		
-		if(isInRange(xFrom) && isInRange(yFrom) && isInRange(xTo) && isInRange(yTo)) {
-			return true;
-		} else {
-			throw new CoordinateNotOnBoard();
-		}
-	}
-	
-	private boolean isInRange(int x) {
-		if(x < 8 && x > -1) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-	
-	private boolean isToNotOccupiedByMyPiece() throws CoordinateOccupiedByMyPieceException {
-		Piece piece = board.getPieceAt(this.to);
-		if(piece == null || piece.getColor() != this.actualPlayerColor) {
-			return true;
-		}
-		throw new CoordinateOccupiedByMyPieceException();
-	}
-	
-	private boolean validateIfPieceIsThere() throws PieceNotThereException {
-		if(board.getPieceAt(this.from) != null) {
-			return true;
-		}
-		throw new PieceNotThereException();
-	}
-	
-	private boolean validatePieceColor() throws WrongPieceColorException {
-		if(board.getPieceAt(this.from).getColor() == this.actualPlayerColor) {
-			return true;
-		}
-		throw new WrongPieceColorException();
 	}
 }

@@ -1,5 +1,7 @@
 package com.capgemini.chess.algorithms.implementation;
 
+import java.util.List;
+
 import com.capgemini.chess.algorithms.data.Coordinate;
 import com.capgemini.chess.algorithms.data.Move;
 import com.capgemini.chess.algorithms.data.enums.Color;
@@ -32,6 +34,13 @@ public class ValidationManager {
 		//isToNotOccupiedByMyPiece();
 		//bishop |xfrom - xto| == |yfrom - yto|
 		//king (xfrom - xto)*2 == (yfrom - yto)^2
+		
+		ValidatorFactory validatorFactory = new ValidatorFactory(this.from, this.to,
+				this.board, this.actualPlayerColor);
+		List<Validator> validators = validatorFactory.getValidators();
+		for (Validator validator : validators) {
+			validator.validate();
+		}
 		return null;
 	}
 }

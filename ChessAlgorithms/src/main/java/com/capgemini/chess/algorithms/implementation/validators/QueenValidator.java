@@ -8,6 +8,10 @@ import com.capgemini.chess.algorithms.implementation.Validator;
 import com.capgemini.chess.algorithms.implementation.exceptions.InvalidMoveException;
 
 public class QueenValidator implements Validator {
+	private Coordinate from;
+	private Coordinate to;
+	private Board board;
+	private Color actualPlayerColor;
 
 	public QueenValidator(Coordinate from, Coordinate to, Board board, Color actualPlayerColor) {
 		super();

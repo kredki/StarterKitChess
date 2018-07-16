@@ -1,13 +1,20 @@
 package com.capgemini.chess.algorithms.implementation.validators;
 
+import com.capgemini.chess.algorithms.data.Coordinate;
 import com.capgemini.chess.algorithms.data.Move;
+import com.capgemini.chess.algorithms.data.enums.Color;
+import com.capgemini.chess.algorithms.data.generated.Board;
 import com.capgemini.chess.algorithms.implementation.Validator;
 import com.capgemini.chess.algorithms.implementation.exceptions.InvalidMoveException;
 
 public class QueenValidator implements Validator {
 
-	public QueenValidator() {
-		// TODO Auto-generated constructor stub
+	public QueenValidator(Coordinate from, Coordinate to, Board board, Color actualPlayerColor) {
+		super();
+		this.from = from;
+		this.to = to;
+		this.board = board;
+		this.actualPlayerColor = actualPlayerColor;
 	}
 
 	@Override

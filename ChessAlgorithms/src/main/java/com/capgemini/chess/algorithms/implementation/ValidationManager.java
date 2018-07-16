@@ -27,14 +27,7 @@ public class ValidationManager {
 		this.actualPlayerColor = actualPlayerColor;
 	}
 	
-	public Move validate() throws InvalidMoveException {
-		//isCoordinatesOnBoard();
-		//validateIfPieceIsThere();
-		//validatePieceColor();
-		//isToNotOccupiedByMyPiece();
-		//bishop |xfrom - xto| == |yfrom - yto|
-		//king (xfrom - xto)*2 == (yfrom - yto)^2
-		
+	public Move validate() throws InvalidMoveException {		
 		ValidatorFactory validatorFactory = new ValidatorFactory(this.from, this.to,
 				this.board, this.actualPlayerColor);
 		List<Validator> validators = validatorFactory.getValidators();

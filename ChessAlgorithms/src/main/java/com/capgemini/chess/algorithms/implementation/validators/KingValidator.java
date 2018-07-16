@@ -23,11 +23,7 @@ public class KingValidator implements Validator {
 	}
 
 	@Override
-	public Move validate() throws InvalidMoveException {
-		if(!board.getPieceAt(this.from).getType().equals(PieceType.KING)) {
-			throw new InvalidMoveException();
-		}
-		
+	public Move validate() throws InvalidMoveException {		
 		int deltaX = Math.abs(this.to.getX() - this.from.getX());
 		int deltaY = Math.abs(this.to.getY() - this.from.getY());
 		if (deltaX < 2 && deltaY < 2) {

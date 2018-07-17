@@ -3,6 +3,7 @@ package com.capgemini.chess.algorithms.implementation.validators;
 import com.capgemini.chess.algorithms.data.Coordinate;
 import com.capgemini.chess.algorithms.data.Move;
 import com.capgemini.chess.algorithms.data.enums.Color;
+import com.capgemini.chess.algorithms.data.enums.MoveType;
 import com.capgemini.chess.algorithms.data.generated.Board;
 import com.capgemini.chess.algorithms.implementation.Validator;
 import com.capgemini.chess.algorithms.implementation.exceptions.InvalidMoveException;
@@ -49,11 +50,11 @@ public class PawnValidator implements Validator {
 		int absDeltaX = Math.abs(this.to.getX() - this.from.getX());
 		
 		if (isWhiteAttack(deltaX, deltaY)) {
-			return null;
+			return new Move(from, to, MoveType.ATTACK, board.getPieceAt(from));
 		} else if (isWhiteCapture(absDeltaX, deltaY)) {
-			return null;
+			return new Move(from, to, MoveType.CAPTURE, board.getPieceAt(from));
 		} else if (isWhiteFirstMove(deltaX, deltaY)) {
-			return null;
+			return new Move(from, to, MoveType.ATTACK, board.getPieceAt(from));
 		} else {
 			throw new InvalidMoveException();
 		}
@@ -80,11 +81,11 @@ public class PawnValidator implements Validator {
 		int absDeltaX = Math.abs(this.to.getX() - this.from.getX());
 		
 		if (isBlackAttack(deltaX, deltaY)) {
-			return null;
+			return new Move(from, to, MoveType.ATTACK, board.getPieceAt(from));
 		} else if (isBlackCapture(absDeltaX, deltaY)) {
-			return null;
+			return new Move(from, to, MoveType.CAPTURE, board.getPieceAt(from));
 		} else if (isBlackFirstMove(deltaX, deltaY)) {
-			return null;
+			return new Move(from, to, MoveType.ATTACK, board.getPieceAt(from));
 		} else {
 			throw new InvalidMoveException();
 		}

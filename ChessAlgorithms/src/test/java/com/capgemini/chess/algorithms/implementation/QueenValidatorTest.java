@@ -44,7 +44,7 @@ public class QueenValidatorTest {
 	public void shouldThrowException() throws InvalidMoveException {
 		// given
 		Board board = new Board();
-		board.setPieceAt(Piece.WHITE_ROOK, new Coordinate(4, 4));
+		board.setPieceAt(Piece.WHITE_QUEEN, new Coordinate(4, 4));
 		Coordinate from = new Coordinate(4, 4);
 		Coordinate to = new Coordinate(3, 2);
 		

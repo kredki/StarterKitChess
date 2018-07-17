@@ -30,6 +30,7 @@ public class ValidatorFactory {
 		validators.add(new PieceIsThereValidator(this.from, this.board));
 		validators.add(new PieceColorValidator(this.from, this.board, this.actualPlayerColor));
 		validators.add(new OccupiedByMyPieceValidator(this.to, this.board, this.actualPlayerColor));
+		validators.add(new KingOnToValidator(to, board));
 		validators.add(getPieceValidator());
 		return validators;
 	}

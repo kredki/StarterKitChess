@@ -31,9 +31,10 @@ public class ValidationManager {
 		ValidatorFactory validatorFactory = new ValidatorFactory(this.from, this.to,
 				this.board, this.actualPlayerColor);
 		List<Validator> validators = validatorFactory.getValidators();
+		Move move = null;
 		for (Validator validator : validators) {
-			validator.validate();
+			move = validator.validate();
 		}
-		return null;
+		return move;
 	}
 }

@@ -12,6 +12,19 @@ public class PawnValidator implements Validator {
 	private Coordinate to;
 	private Board board;
 	private Color actualPlayerColor;
+	private static final int DELTA_X_WHITE_ATTACK = 0;
+	private static final int DELTA_Y_WHITE_ATTACK = 1;
+	private static final int DELTA_X_WHITE_CAPTURE = 1;
+	private static final int DELTA_Y_WHITE_CAPTURE = 1;
+	private static final int DELTA_X_WHITE_FIRST_MOVE = 0;
+	private static final int DELTA_Y_WHITE_FIRST_MOVE = 2;
+	
+	private static final int DELTA_X_BLACK_ATTACK = 0;
+	private static final int DELTA_Y_BLACK_ATTACK = -1;
+	private static final int DELTA_X_BLACK_CAPTURE = 1;
+	private static final int DELTA_Y_BLACK_CAPTURE = -1;
+	private static final int DELTA_X_BLACK_FIRST_MOVE = 0;
+	private static final int DELTA_Y_BLACK_FIRST_MOVE = -2;
 
 	public PawnValidator(Coordinate from, Coordinate to, Board board, Color actualPlayerColor) {
 		super();
@@ -23,8 +36,48 @@ public class PawnValidator implements Validator {
 
 	@Override
 	public Move validate() throws InvalidMoveException {
-		// TODO Auto-generated method stub
-		return null;
+		if (actualPlayerColor.equals(Color.WHITE)) {
+			return validateWhite();
+		} else {
+			return validateBlack();
+		}
 	}
 
+	private Move validateWhite() throws InvalidMoveException {
+		int deltaX = this.to.getX() - this.from.getX();
+		int deltaY = this.to.getY() - this.from.getY();
+		int absDeltaX = Math.abs(this.to.getX() - this.from.getX());
+		
+		if (deltaX == DELTA_X_WHITE_ATTACK && deltaY == DELTA_Y_WHITE_ATTACK
+				&& board.getPieceAt(this.to) == null) {
+			return null;
+		} else if (absDeltaX == DELTA_X_WHITE_CAPTURE && deltaY == DELTA_Y_WHITE_CAPTURE
+				&& board.getPieceAt(this.to) != null) {
+			return null;
+		} else if (this.from.getY() == DELTA_Y_WHITE_FIRST_MOVE && deltaX == DELTA_X_WHITE_FIRST_MOVE
+				&& board.getPieceAt(this.to) == null) {
+			return null;
+		} else {
+			throw new InvalidMoveException();
+		}
+	}
+
+	private Move validateBlack() throws InvalidMoveException {
+		int deltaX = this.to.getX() - this.from.getX();
+		int deltaY = this.to.getY() - this.from.getY();
+		int absDeltaX = Math.abs(this.to.getX() - this.from.getX());
+		
+		if (deltaX == DELTA_X_BLACK_ATTACK && deltaY == DELTA_Y_BLACK_ATTACK
+				&& board.getPieceAt(this.to) == null) {
+			return null;
+		} else if (absDeltaX == DELTA_X_BLACK_CAPTURE && deltaY == DELTA_Y_BLACK_CAPTURE
+				&& board.getPieceAt(this.to) != null) {
+			return null;
+		} else if (this.from.getY() == DELTA_Y_BLACK_FIRST_MOVE && deltaX == DELTA_X_BLACK_FIRST_MOVE
+				&& board.getPieceAt(this.to) == null) {
+			return null;
+		} else {
+			throw new InvalidMoveException();
+		}
+	}
 }

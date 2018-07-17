@@ -3,6 +3,8 @@ package com.capgemini.chess.algorithms.implementation.validators;
 import com.capgemini.chess.algorithms.data.Coordinate;
 import com.capgemini.chess.algorithms.data.Move;
 import com.capgemini.chess.algorithms.data.enums.Color;
+import com.capgemini.chess.algorithms.data.enums.MoveType;
+import com.capgemini.chess.algorithms.data.enums.Piece;
 import com.capgemini.chess.algorithms.data.generated.Board;
 import com.capgemini.chess.algorithms.implementation.Validator;
 import com.capgemini.chess.algorithms.implementation.exceptions.InvalidMoveException;
@@ -29,7 +31,12 @@ public class KnightValidator implements Validator {
 		int deltaY = Math.abs(this.to.getY() - this.from.getY());
 		if ((deltaX == DELTA_COORDINATES_2 && deltaY == DELTA_COORDINATES_1) ||
 				(deltaX == DELTA_COORDINATES_1 && deltaY == DELTA_COORDINATES_2)) {
-			return null;
+			Piece pieceAtTo = board.getPieceAt(to);
+			if(pieceAtTo != null) {
+				return new Move(from, to, MoveType.CAPTURE, board.getPieceAt(from));
+			} else {
+				return new Move(from, to, MoveType.ATTACK, board.getPieceAt(from));
+			}
 		} else {
 			throw new InvalidMoveException();
 		}

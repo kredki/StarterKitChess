@@ -55,7 +55,7 @@ public class RookValidatorTest {
 		Coordinate to = new Coordinate(4, 2);
 		
 		//when
-		Validator validator = new QueenValidator(from, to, board, Color.WHITE);
+		Validator validator = new RookValidator(from, to, board, Color.WHITE);
 		Move move = validator.validate();
 		
 		//then
@@ -75,7 +75,7 @@ public class RookValidatorTest {
 		Coordinate to = new Coordinate(4, 2);
 		
 		//when
-		Validator validator = new QueenValidator(from, to, board, Color.WHITE);
+		Validator validator = new RookValidator(from, to, board, Color.WHITE);
 		Move move = validator.validate();
 		
 		//then

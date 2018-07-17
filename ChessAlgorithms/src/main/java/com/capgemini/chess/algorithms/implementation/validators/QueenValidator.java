@@ -23,8 +23,14 @@ public class QueenValidator implements Validator {
 
 	@Override
 	public Move validate() throws InvalidMoveException {
-		// TODO Auto-generated method stub
-		return null;
+		int deltaX = Math.abs(this.to.getX() - this.from.getX());
+		int deltaY = Math.abs(this.to.getY() - this.from.getY());
+		if (((deltaX == 0 && deltaY > 0) || (deltaX > 0 && deltaY == 0)) ||
+				(deltaX == deltaY)) {
+			return null;
+		} else {
+			throw new InvalidMoveException();
+		}
 	}
 
 }

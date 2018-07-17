@@ -8,7 +8,6 @@ import com.capgemini.chess.algorithms.data.enums.Piece;
 import com.capgemini.chess.algorithms.data.generated.Board;
 import com.capgemini.chess.algorithms.implementation.exceptions.InvalidMoveException;
 import com.capgemini.chess.algorithms.implementation.validators.BishopValidator;
-import com.capgemini.chess.algorithms.implementation.validators.KingValidator;
 
 public class BishopValidatorTest {
 	@Test

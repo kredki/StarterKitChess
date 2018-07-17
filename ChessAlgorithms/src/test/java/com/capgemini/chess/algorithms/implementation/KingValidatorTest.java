@@ -1,18 +1,13 @@
 package com.capgemini.chess.algorithms.implementation;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.Test;
 
 import com.capgemini.chess.algorithms.data.Coordinate;
-import com.capgemini.chess.algorithms.data.Move;
 import com.capgemini.chess.algorithms.data.enums.Color;
 import com.capgemini.chess.algorithms.data.enums.Piece;
 import com.capgemini.chess.algorithms.data.generated.Board;
 import com.capgemini.chess.algorithms.implementation.exceptions.InvalidMoveException;
 import com.capgemini.chess.algorithms.implementation.validators.KingValidator;
-import com.capgemini.chess.algorithms.implementation.validators.PieceColorValidator;
 
 public class KingValidatorTest {
 	@Test

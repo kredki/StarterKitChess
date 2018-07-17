@@ -8,19 +8,19 @@ import com.capgemini.chess.algorithms.data.enums.Piece;
 import com.capgemini.chess.algorithms.data.generated.Board;
 import com.capgemini.chess.algorithms.implementation.exceptions.InvalidMoveException;
 import com.capgemini.chess.algorithms.implementation.validators.BishopValidator;
-import com.capgemini.chess.algorithms.implementation.validators.KingValidator;
+import com.capgemini.chess.algorithms.implementation.validators.KnightValidator;
 
-public class BishopValidatorTest {
+public class KnightValidatorTest {
 	@Test
 	public void shouldNotThrowException() throws InvalidMoveException {
 		// given
 		Board board = new Board();
-		board.setPieceAt(Piece.WHITE_BISHOP, new Coordinate(4, 0));
+		board.setPieceAt(Piece.WHITE_KNIGHT, new Coordinate(4, 0));
 		Coordinate from = new Coordinate(4, 4);
-		Coordinate to = new Coordinate(7, 7);
+		Coordinate to = new Coordinate(5, 6);
 		
 		//when
-		Validator validator = new BishopValidator(from, to, board, Color.WHITE);
+		Validator validator = new KnightValidator(from, to, board, Color.WHITE);
 
 		// then
 		validator.validate();
@@ -30,12 +30,12 @@ public class BishopValidatorTest {
 	public void shouldThrowException() throws InvalidMoveException {
 		// given
 		Board board = new Board();
-		board.setPieceAt(Piece.WHITE_BISHOP, new Coordinate(4, 0));
+		board.setPieceAt(Piece.WHITE_KNIGHT, new Coordinate(4, 0));
 		Coordinate from = new Coordinate(4, 4);
-		Coordinate to = new Coordinate(2, 1);
+		Coordinate to = new Coordinate(5, 5);
 		
 		//when
-		Validator validator = new BishopValidator(from, to, board, Color.WHITE);
+		Validator validator = new KnightValidator(from, to, board, Color.WHITE);
 
 		// then
 		validator.validate();
@@ -45,12 +45,12 @@ public class BishopValidatorTest {
 	public void shouldThrowException2() throws InvalidMoveException {
 		// given
 		Board board = new Board();
-		board.setPieceAt(Piece.WHITE_BISHOP, new Coordinate(4, 0));
+		board.setPieceAt(Piece.WHITE_KNIGHT, new Coordinate(4, 0));
 		Coordinate from = new Coordinate(4, 4);
-		Coordinate to = new Coordinate(6, 3);
+		Coordinate to = new Coordinate(3, 1);
 		
 		//when
-		Validator validator = new BishopValidator(from, to, board, Color.WHITE);
+		Validator validator = new KnightValidator(from, to, board, Color.WHITE);
 
 		// then
 		validator.validate();

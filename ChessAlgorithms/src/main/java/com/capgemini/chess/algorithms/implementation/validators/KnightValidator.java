@@ -12,6 +12,8 @@ public class KnightValidator implements Validator {
 	private Coordinate to;
 	private Board board;
 	private Color actualPlayerColor;
+	private static final int DELTA_COORDINATES_1 = 1;
+	private static final int DELTA_COORDINATES_2 = 2;
 
 	public KnightValidator(Coordinate from, Coordinate to, Board board, Color actualPlayerColor) {
 		super();
@@ -23,8 +25,14 @@ public class KnightValidator implements Validator {
 
 	@Override
 	public Move validate() throws InvalidMoveException {
-		// TODO Auto-generated method stub
-		return null;
+		int deltaX = Math.abs(this.to.getX() - this.from.getX());
+		int deltaY = Math.abs(this.to.getY() - this.from.getY());
+		if ((deltaX == DELTA_COORDINATES_2 && deltaY == DELTA_COORDINATES_1) ||
+				(deltaX == DELTA_COORDINATES_1 && deltaY == DELTA_COORDINATES_2)) {
+			return null;
+		} else {
+			throw new InvalidMoveException();
+		}
 	}
 
 }

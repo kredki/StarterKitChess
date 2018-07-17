@@ -30,12 +30,12 @@ public class PawnValidatorTest {
 	public void shouldNotThrowExceptionBlackNormalMove() throws InvalidMoveException {
 		// given
 		Board board = new Board();
-		board.setPieceAt(Piece.WHITE_PAWN, new Coordinate(4, 4));
+		board.setPieceAt(Piece.BLACK_PAWN, new Coordinate(4, 4));
 		Coordinate from = new Coordinate(4, 4);
 		Coordinate to = new Coordinate(4, 3);
 		
 		//when
-		Validator validator = new PawnValidator(from, to, board, Color.WHITE);
+		Validator validator = new PawnValidator(from, to, board, Color.BLACK);
 
 		// then
 		validator.validate();
@@ -95,7 +95,7 @@ public class PawnValidatorTest {
 		Coordinate to = new Coordinate(4, 5);
 		
 		//when
-		Validator validator = new PawnValidator(from, to, board, Color.WHITE);
+		Validator validator = new PawnValidator(from, to, board, Color.BLACK);
 
 		// then
 		validator.validate();

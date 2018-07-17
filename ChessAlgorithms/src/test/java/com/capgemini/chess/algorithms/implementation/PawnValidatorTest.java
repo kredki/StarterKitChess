@@ -61,13 +61,45 @@ public class PawnValidatorTest {
 		validator.validate();
 	}
 	
+	@Test(expected = InvalidMoveException.class)
+	public void shouldThrowExceptionWhiteFirstMove() throws InvalidMoveException {
+		// given
+		Board board = new Board();
+		board.setPieceAt(Piece.WHITE_PAWN, new Coordinate(4, 1));
+		board.setPieceAt(Piece.BLACK_BISHOP, new Coordinate(4, 2));
+		Coordinate from = new Coordinate(4, 1);
+		Coordinate to = new Coordinate(4, 3);
+		
+		//when
+		Validator validator = new PawnValidator(from, to, board, Color.WHITE);
+
+		// then
+		validator.validate();
+	}
+	
 	@Test
 	public void shouldNotThrowExceptionBlackFirstMove() throws InvalidMoveException {
 		// given
 		Board board = new Board();
 		board.setPieceAt(Piece.BLACK_PAWN, new Coordinate(4, 6));
 		Coordinate from = new Coordinate(4, 6);
-		Coordinate to = new Coordinate(4, 5);
+		Coordinate to = new Coordinate(4, 4);
+		
+		//when
+		Validator validator = new PawnValidator(from, to, board, Color.BLACK);
+
+		// then
+		validator.validate();
+	}
+	
+	@Test(expected = InvalidMoveException.class)
+	public void shouldThrowExceptionBlackFirstMove() throws InvalidMoveException {
+		// given
+		Board board = new Board();
+		board.setPieceAt(Piece.BLACK_PAWN, new Coordinate(4, 6));
+		board.setPieceAt(Piece.WHITE_BISHOP, new Coordinate(4, 5));
+		Coordinate from = new Coordinate(4, 6);
+		Coordinate to = new Coordinate(4, 4);
 		
 		//when
 		Validator validator = new PawnValidator(from, to, board, Color.BLACK);

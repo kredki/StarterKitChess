@@ -19,7 +19,7 @@ public class PawnValidator implements Validator {
 	private static final int DELTA_Y_WHITE_CAPTURE = 1;
 	private static final int DELTA_X_WHITE_FIRST_MOVE = 0;
 	private static final int DELTA_Y_WHITE_FIRST_MOVE = 2;
-	
+
 	private static final int DELTA_X_BLACK_ATTACK = 0;
 	private static final int DELTA_Y_BLACK_ATTACK = -1;
 	private static final int DELTA_X_BLACK_CAPTURE = 1;
@@ -48,59 +48,85 @@ public class PawnValidator implements Validator {
 		int deltaX = this.to.getX() - this.from.getX();
 		int deltaY = this.to.getY() - this.from.getY();
 		int absDeltaX = Math.abs(this.to.getX() - this.from.getX());
-		
+
 		if (isWhiteAttack(deltaX, deltaY)) {
 			return new Move(from, to, MoveType.ATTACK, board.getPieceAt(from));
 		} else if (isWhiteCapture(absDeltaX, deltaY)) {
 			return new Move(from, to, MoveType.CAPTURE, board.getPieceAt(from));
 		} else if (isWhiteFirstMove(deltaX, deltaY)) {
-			return new Move(from, to, MoveType.ATTACK, board.getPieceAt(from));
+			if (isSpaceBetweenEmpty(Color.WHITE)) {
+				return new Move(from, to, MoveType.ATTACK, board.getPieceAt(from));
+			} else {
+				throw new InvalidMoveException();
+			}
 		} else {
 			throw new InvalidMoveException();
 		}
 	}
-	
+
 	private boolean isWhiteAttack(int deltaX, int deltaY) {
-		return (deltaX == DELTA_X_WHITE_ATTACK && deltaY == DELTA_Y_WHITE_ATTACK
-				&& board.getPieceAt(this.to) == null);
+		return (deltaX == DELTA_X_WHITE_ATTACK && deltaY == DELTA_Y_WHITE_ATTACK && board.getPieceAt(this.to) == null);
 	}
-	
+
 	private boolean isWhiteCapture(int absDeltaX, int deltaY) {
 		return (absDeltaX == DELTA_X_WHITE_CAPTURE && deltaY == DELTA_Y_WHITE_CAPTURE
 				&& board.getPieceAt(this.to) != null);
 	}
-	
+
 	private boolean isWhiteFirstMove(int deltaX, int deltaY) {
 		return (deltaY == DELTA_Y_WHITE_FIRST_MOVE && deltaX == DELTA_X_WHITE_FIRST_MOVE
 				&& board.getPieceAt(this.to) == null);
+	}
+
+	private boolean isSpaceBetweenEmpty(Color color) {
+		if(color.equals(Color.WHITE)) {
+			int x = from.getX();
+			int y = from.getY();
+			if(board.getPieceAt(new Coordinate(x, y+1)) != null) {
+				return false;
+			} else {
+				return true;
+			}
+		} else {
+			int x = from.getX();
+			int y = from.getY();
+			if(board.getPieceAt(new Coordinate(x, y-1)) != null) {
+				return false;
+			} else {
+				return true;
+			}
+		}
 	}
 
 	private Move validateBlack() throws InvalidMoveException {
 		int deltaX = this.to.getX() - this.from.getX();
 		int deltaY = this.to.getY() - this.from.getY();
 		int absDeltaX = Math.abs(this.to.getX() - this.from.getX());
-		
+
 		if (isBlackAttack(deltaX, deltaY)) {
 			return new Move(from, to, MoveType.ATTACK, board.getPieceAt(from));
 		} else if (isBlackCapture(absDeltaX, deltaY)) {
 			return new Move(from, to, MoveType.CAPTURE, board.getPieceAt(from));
 		} else if (isBlackFirstMove(deltaX, deltaY)) {
-			return new Move(from, to, MoveType.ATTACK, board.getPieceAt(from));
+			if (isSpaceBetweenEmpty(Color.BLACK)) {
+				return new Move(from, to, MoveType.ATTACK, board.getPieceAt(from));
+			} else {
+				throw new InvalidMoveException();
+			}
 		} else {
 			throw new InvalidMoveException();
 		}
 	}
-	
+
 	private boolean isBlackAttack(int deltaX, int deltaY) {
-		return (deltaX == DELTA_X_BLACK_ATTACK && deltaY == DELTA_Y_BLACK_ATTACK
-				&& board.getPieceAt(this.to) == null);
+		return (deltaX == DELTA_X_BLACK_ATTACK && deltaY == DELTA_Y_BLACK_ATTACK && board.getPieceAt(this.to) == null);
 	}
-	
+
 	private boolean isBlackCapture(int absDeltaX, int deltaY) {
 		return (absDeltaX == DELTA_X_BLACK_CAPTURE && deltaY == DELTA_Y_BLACK_CAPTURE
 				&& board.getPieceAt(this.to) != null);
 	}
-	
+
 	private boolean isBlackFirstMove(int deltaX, int deltaY) {
 		return (deltaY == DELTA_Y_BLACK_FIRST_MOVE && deltaX == DELTA_X_BLACK_FIRST_MOVE
 				&& board.getPieceAt(this.to) == null);

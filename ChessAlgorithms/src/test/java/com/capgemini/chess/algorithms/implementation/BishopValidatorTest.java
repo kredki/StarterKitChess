@@ -14,7 +14,7 @@ public class BishopValidatorTest {
 	public void shouldNotThrowException() throws InvalidMoveException {
 		// given
 		Board board = new Board();
-		board.setPieceAt(Piece.WHITE_BISHOP, new Coordinate(4, 0));
+		board.setPieceAt(Piece.WHITE_BISHOP, new Coordinate(4, 4));
 		Coordinate from = new Coordinate(4, 4);
 		Coordinate to = new Coordinate(7, 7);
 		
@@ -29,7 +29,7 @@ public class BishopValidatorTest {
 	public void shouldThrowException() throws InvalidMoveException {
 		// given
 		Board board = new Board();
-		board.setPieceAt(Piece.WHITE_BISHOP, new Coordinate(4, 0));
+		board.setPieceAt(Piece.WHITE_BISHOP, new Coordinate(4, 4));
 		Coordinate from = new Coordinate(4, 4);
 		Coordinate to = new Coordinate(2, 1);
 		

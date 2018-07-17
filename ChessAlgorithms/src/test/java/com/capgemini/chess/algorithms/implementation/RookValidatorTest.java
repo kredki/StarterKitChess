@@ -14,7 +14,7 @@ public class RookValidatorTest {
 	public void shouldNotThrowException() throws InvalidMoveException {
 		// given
 		Board board = new Board();
-		board.setPieceAt(Piece.WHITE_ROOK, new Coordinate(4, 0));
+		board.setPieceAt(Piece.WHITE_ROOK, new Coordinate(4, 4));
 		Coordinate from = new Coordinate(4, 4);
 		Coordinate to = new Coordinate(4, 2);
 		
@@ -29,7 +29,7 @@ public class RookValidatorTest {
 	public void shouldThrowException() throws InvalidMoveException {
 		// given
 		Board board = new Board();
-		board.setPieceAt(Piece.WHITE_ROOK, new Coordinate(4, 0));
+		board.setPieceAt(Piece.WHITE_ROOK, new Coordinate(4, 4));
 		Coordinate from = new Coordinate(4, 4);
 		Coordinate to = new Coordinate(3, 5);
 		

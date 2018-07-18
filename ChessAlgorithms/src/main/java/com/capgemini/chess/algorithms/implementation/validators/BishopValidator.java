@@ -31,7 +31,7 @@ public class BishopValidator implements Validator {
 		if (deltaX == deltaY) {
 			validateSpacesBetween();
 			Piece pieceAtTo = board.getPieceAt(to);
-			if(pieceAtTo != null) {
+			if (pieceAtTo != null) {
 				return new Move(from, to, MoveType.CAPTURE, board.getPieceAt(from));
 			} else {
 				return new Move(from, to, MoveType.ATTACK, board.getPieceAt(from));
@@ -40,9 +40,34 @@ public class BishopValidator implements Validator {
 			throw new InvalidMoveException();
 		}
 	}
-	
+
 	private void validateSpacesBetween() throws SpaceBetweenNotEmpty {
-		
+		int deltaX = this.to.getX() - this.from.getX();
+		int deltaY = this.to.getY() - this.from.getY();
+		if (deltaX > 0 && deltaY > 0) {
+			validateXPlusYPlus();
+		} else if (deltaX > 0 && deltaY < 0) {
+			validateXPlusYMinus();
+		} else if (deltaX < 0 && deltaY > 0) {
+			validateXMinusYPlus();
+		} else { //deltaX < 0 && deltaY < 0
+			validateXMinusYMinus();
+		}
 	}
 
+	private void validateXPlusYPlus() {
+
+	}
+
+	private void validateXPlusYMinus() {
+
+	}
+	
+	private void validateXMinusYPlus() {
+
+	}
+	
+	private void validateXMinusYMinus() {
+
+	}
 }

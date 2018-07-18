@@ -12,8 +12,8 @@ import com.capgemini.chess.algorithms.data.enums.Piece;
 import com.capgemini.chess.algorithms.data.enums.PieceType;
 import com.capgemini.chess.algorithms.data.generated.Board;
 import com.capgemini.chess.algorithms.implementation.exceptions.InvalidMoveException;
+import com.capgemini.chess.algorithms.implementation.exceptions.SpaceBetweenNotEmpty;
 import com.capgemini.chess.algorithms.implementation.validators.PawnValidator;
-import com.capgemini.chess.algorithms.implementation.validators.RookValidator;
 
 public class PawnValidatorTest {
 	@Test
@@ -61,7 +61,7 @@ public class PawnValidatorTest {
 		validator.validate();
 	}
 	
-	@Test(expected = InvalidMoveException.class)
+	@Test(expected = SpaceBetweenNotEmpty.class)
 	public void shouldThrowExceptionWhiteFirstMove() throws InvalidMoveException {
 		// given
 		Board board = new Board();
@@ -92,7 +92,7 @@ public class PawnValidatorTest {
 		validator.validate();
 	}
 	
-	@Test(expected = InvalidMoveException.class)
+	@Test(expected = SpaceBetweenNotEmpty.class)
 	public void shouldThrowExceptionBlackFirstMove() throws InvalidMoveException {
 		// given
 		Board board = new Board();

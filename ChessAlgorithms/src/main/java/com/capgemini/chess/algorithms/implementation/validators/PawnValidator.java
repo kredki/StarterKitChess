@@ -7,6 +7,7 @@ import com.capgemini.chess.algorithms.data.enums.MoveType;
 import com.capgemini.chess.algorithms.data.generated.Board;
 import com.capgemini.chess.algorithms.implementation.Validator;
 import com.capgemini.chess.algorithms.implementation.exceptions.InvalidMoveException;
+import com.capgemini.chess.algorithms.implementation.exceptions.SpaceBetweenNotEmpty;
 
 public class PawnValidator implements Validator {
 	private Coordinate from;
@@ -57,7 +58,7 @@ public class PawnValidator implements Validator {
 			if (isSpaceBetweenEmpty(Color.WHITE)) {
 				return new Move(from, to, MoveType.ATTACK, board.getPieceAt(from));
 			} else {
-				throw new InvalidMoveException();
+				throw new SpaceBetweenNotEmpty();
 			}
 		} else {
 			throw new InvalidMoveException();
@@ -111,7 +112,7 @@ public class PawnValidator implements Validator {
 			if (isSpaceBetweenEmpty(Color.BLACK)) {
 				return new Move(from, to, MoveType.ATTACK, board.getPieceAt(from));
 			} else {
-				throw new InvalidMoveException();
+				throw new SpaceBetweenNotEmpty();
 			}
 		} else {
 			throw new InvalidMoveException();

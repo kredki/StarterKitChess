@@ -8,6 +8,7 @@ import com.capgemini.chess.algorithms.data.enums.Piece;
 import com.capgemini.chess.algorithms.data.generated.Board;
 import com.capgemini.chess.algorithms.implementation.Validator;
 import com.capgemini.chess.algorithms.implementation.exceptions.InvalidMoveException;
+import com.capgemini.chess.algorithms.implementation.exceptions.SpaceBetweenNotEmpty;
 
 public class BishopValidator implements Validator {
 	private Coordinate from;
@@ -28,6 +29,7 @@ public class BishopValidator implements Validator {
 		int deltaX = Math.abs(this.to.getX() - this.from.getX());
 		int deltaY = Math.abs(this.to.getY() - this.from.getY());
 		if (deltaX == deltaY) {
+			validateSpacesBetween();
 			Piece pieceAtTo = board.getPieceAt(to);
 			if(pieceAtTo != null) {
 				return new Move(from, to, MoveType.CAPTURE, board.getPieceAt(from));
@@ -37,6 +39,10 @@ public class BishopValidator implements Validator {
 		} else {
 			throw new InvalidMoveException();
 		}
+	}
+	
+	private void validateSpacesBetween() throws SpaceBetweenNotEmpty {
+		
 	}
 
 }

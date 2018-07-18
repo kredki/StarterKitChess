@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.capgemini.chess.algorithms.data.Coordinate;
+import com.capgemini.chess.algorithms.data.Move;
 import com.capgemini.chess.algorithms.data.enums.Color;
+import com.capgemini.chess.algorithms.data.enums.Piece;
 import com.capgemini.chess.algorithms.data.enums.PieceType;
 import com.capgemini.chess.algorithms.data.generated.Board;
 import com.capgemini.chess.algorithms.implementation.exceptions.InvalidMoveException;
@@ -15,6 +17,8 @@ public class ValidatorFactory {
 	private Coordinate to;
 	private Board board;
 	private Color actualPlayerColor;
+	private final static int BOARD_MAX_SIZE = 7;
+	private final static int BOARD_MIN_SIZE = 0;
 
 	public ValidatorFactory(Coordinate from, Coordinate to, Board board, Color actualPlayerColor) {
 		super();
@@ -56,6 +60,76 @@ public class ValidatorFactory {
 			break;
 		case PAWN:
 			validator = new PawnValidator(this.from, this.to, this.board, this.actualPlayerColor);
+			break;
+
+		default:
+			break;
+		}
+		return validator;
+	}
+	
+	public List<Validator> getAfterMoveValidators(Move move) {
+		List<Validator> validators = new ArrayList<>();
+		Board afterMoveBoard = copyBoard();
+		Coordinate copyFrom = move.getFrom();
+		Coordinate copyTo = move.getTo();
+		afterMoveBoard.setPieceAt(null, copyFrom);
+		afterMoveBoard.setPieceAt(move.getMovedPiece(), copyTo);
+		Color opponentsColor = getOpponentsColor();
+		
+		for (int x = BOARD_MIN_SIZE; x <= BOARD_MAX_SIZE; x++) {
+			for (int y = BOARD_MIN_SIZE; y <= BOARD_MAX_SIZE; y++) {
+				Coordinate coordinate = new Coordinate(x, y);
+				Piece piece = afterMoveBoard.getPieceAt(coordinate);
+				if(piece != null && !piece.getColor().equals(this.actualPlayerColor)
+						&& !piece.getType().equals(PieceType.KING)) {
+					validators.add(getPieceValidator(piece.getType(), opponentsColor));
+				}
+			}
+		}
+		return validators;
+	}
+	
+	private Board copyBoard() {
+		Board copiedBoard = new Board();
+		for (int x = BOARD_MIN_SIZE; x <= BOARD_MAX_SIZE; x++) {
+			for (int y = BOARD_MIN_SIZE; y <= BOARD_MAX_SIZE; y++) {
+				Coordinate coordinate = new Coordinate(x, y);
+				Piece pieceToCopy = this.board.getPieceAt(coordinate);
+				copiedBoard.setPieceAt(pieceToCopy, coordinate);
+			}
+		}
+		return copiedBoard;
+	}
+	
+	private Color getOpponentsColor() {
+		if(this.actualPlayerColor.equals(Color.WHITE)) {
+			return Color.BLACK;
+		} else {
+			return Color.WHITE;
+		}
+	}
+	
+	private Validator getPieceValidator(PieceType pieceType, Color color) {
+		Validator validator = null;
+		switch (pieceType) {
+		case KING:
+			validator = new KingValidator(this.from, this.to, this.board, color);
+			break;
+		case QUEEN:
+			validator = new QueenValidator(this.from, this.to, this.board, color);
+			break;
+		case BISHOP:
+			validator = new BishopValidator(this.from, this.to, this.board, color);
+			break;
+		case KNIGHT:
+			validator = new KnightValidator(this.from, this.to, this.board, color);
+			break;
+		case ROOK:
+			validator = new RookValidator(this.from, this.to, this.board, color);
+			break;
+		case PAWN:
+			validator = new PawnValidator(this.from, this.to, this.board, color);
 			break;
 
 		default:

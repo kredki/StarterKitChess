@@ -35,6 +35,11 @@ public class ValidationManager {
 		for (Validator validator : validators) {
 			move = validator.validate();
 		}
+		
+		List<Validator> afterMoveValidators = validatorFactory.getAfterMoveValidators(move);
+		for (Validator validator : afterMoveValidators) {
+			validator.validate();
+		}
 		return move;
 	}
 }

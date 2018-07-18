@@ -270,7 +270,7 @@ public class BoardManager {
 				Piece piece = this.board.getPieceAt(coordinate);
 				if (piece != null && piece.getColor().equals(nextMoveColor)) {
 					// TODO
-					PieceMoves.getPossibleMoves(piece.getType(), coordinate);
+					PieceMoves.getPossibleMoves(piece.getType(), coordinate, nextMoveColor);
 				}
 			}
 		}

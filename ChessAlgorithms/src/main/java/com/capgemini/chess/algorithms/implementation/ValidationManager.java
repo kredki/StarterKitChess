@@ -5,13 +5,9 @@ import java.util.List;
 import com.capgemini.chess.algorithms.data.Coordinate;
 import com.capgemini.chess.algorithms.data.Move;
 import com.capgemini.chess.algorithms.data.enums.Color;
-import com.capgemini.chess.algorithms.data.enums.Piece;
 import com.capgemini.chess.algorithms.data.generated.Board;
-import com.capgemini.chess.algorithms.implementation.exceptions.CoordinateNotOnBoard;
-import com.capgemini.chess.algorithms.implementation.exceptions.CoordinateOccupiedByMyPieceException;
 import com.capgemini.chess.algorithms.implementation.exceptions.InvalidMoveException;
-import com.capgemini.chess.algorithms.implementation.exceptions.PieceNotThereException;
-import com.capgemini.chess.algorithms.implementation.exceptions.WrongPieceColorException;
+import com.capgemini.chess.algorithms.implementation.exceptions.KingInCheckException;
 
 public class ValidationManager {
 	private Coordinate from;
@@ -38,7 +34,16 @@ public class ValidationManager {
 		
 		List<Validator> afterMoveValidators = validatorFactory.getAfterMoveValidators(move);
 		for (Validator validator : afterMoveValidators) {
-			validator.validate();
+			boolean kingInCheck = false;
+			try {
+				validator.validate();
+				kingInCheck = true;
+			} catch (InvalidMoveException e) {
+				System.out.println("king not in check for this figure");
+			}
+			if (kingInCheck) {
+				throw new KingInCheckException();
+			}
 		}
 		return move;
 	}

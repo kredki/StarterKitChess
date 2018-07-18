@@ -76,6 +76,7 @@ public class ValidatorFactory {
 		afterMoveBoard.setPieceAt(null, copyFrom);
 		afterMoveBoard.setPieceAt(move.getMovedPiece(), copyTo);
 		Color opponentsColor = getOpponentsColor();
+		Coordinate myKingCoordinate = afterMoveBoard.getKingCoordinates(this.actualPlayerColor);
 		
 		for (int x = BOARD_MIN_SIZE; x <= BOARD_MAX_SIZE; x++) {
 			for (int y = BOARD_MIN_SIZE; y <= BOARD_MAX_SIZE; y++) {
@@ -83,7 +84,9 @@ public class ValidatorFactory {
 				Piece piece = afterMoveBoard.getPieceAt(coordinate);
 				if(piece != null && !piece.getColor().equals(this.actualPlayerColor)
 						&& !piece.getType().equals(PieceType.KING)) {
-					validators.add(getPieceValidator(piece.getType(), opponentsColor));
+					Validator validator = getPieceValidator(coordinate, myKingCoordinate,
+							afterMoveBoard, piece.getType(), opponentsColor);
+					validators.add(validator);
 				}
 			}
 		}
@@ -110,26 +113,26 @@ public class ValidatorFactory {
 		}
 	}
 	
-	private Validator getPieceValidator(PieceType pieceType, Color color) {
+	private Validator getPieceValidator(Coordinate from, Coordinate to, Board board,  PieceType pieceType, Color color) {
 		Validator validator = null;
 		switch (pieceType) {
 		case KING:
-			validator = new KingValidator(this.from, this.to, this.board, color);
+			validator = new KingValidator(from, to, board, color);
 			break;
 		case QUEEN:
-			validator = new QueenValidator(this.from, this.to, this.board, color);
+			validator = new QueenValidator(from, to, board, color);
 			break;
 		case BISHOP:
-			validator = new BishopValidator(this.from, this.to, this.board, color);
+			validator = new BishopValidator(from, to, board, color);
 			break;
 		case KNIGHT:
-			validator = new KnightValidator(this.from, this.to, this.board, color);
+			validator = new KnightValidator(from, to, board, color);
 			break;
 		case ROOK:
-			validator = new RookValidator(this.from, this.to, this.board, color);
+			validator = new RookValidator(from, to, board, color);
 			break;
 		case PAWN:
-			validator = new PawnValidator(this.from, this.to, this.board, color);
+			validator = new PawnValidator(from, to, board, color);
 			break;
 
 		default:

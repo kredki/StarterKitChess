@@ -1,6 +1,6 @@
 package com.capgemini.chess.algorithms.implementation;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
@@ -12,6 +12,7 @@ import com.capgemini.chess.algorithms.data.enums.Piece;
 import com.capgemini.chess.algorithms.data.enums.PieceType;
 import com.capgemini.chess.algorithms.data.generated.Board;
 import com.capgemini.chess.algorithms.implementation.exceptions.InvalidMoveException;
+import com.capgemini.chess.algorithms.implementation.exceptions.SpaceBetweenNotEmpty;
 import com.capgemini.chess.algorithms.implementation.validators.BishopValidator;
 
 public class BishopValidatorTest {
@@ -97,5 +98,69 @@ public class BishopValidatorTest {
 		assertEquals(from, move.getFrom());
 		assertEquals(to, move.getTo());
 		assertEquals(PieceType.BISHOP, move.getMovedPiece().getType());
+	}
+	
+	@Test(expected = SpaceBetweenNotEmpty.class)
+	public void shouldThrowExceptionWhenMoveBlocked() throws InvalidMoveException {
+		// given
+		Board board = new Board();
+		board.setPieceAt(Piece.WHITE_BISHOP, new Coordinate(4, 4));
+		board.setPieceAt(Piece.BLACK_ROOK, new Coordinate(5, 5));
+		Coordinate from = new Coordinate(4, 4);
+		Coordinate to = new Coordinate(7, 7);
+		
+		//when
+		Validator validator = new BishopValidator(from, to, board, Color.WHITE);
+		
+		//then
+		Move move = validator.validate();
+	}
+	
+	@Test(expected = SpaceBetweenNotEmpty.class)
+	public void shouldThrowExceptionWhenMoveBlocked2() throws InvalidMoveException {
+		// given
+		Board board = new Board();
+		board.setPieceAt(Piece.WHITE_BISHOP, new Coordinate(4, 4));
+		board.setPieceAt(Piece.BLACK_ROOK, new Coordinate(3, 5));
+		Coordinate from = new Coordinate(4, 4);
+		Coordinate to = new Coordinate(1, 7);
+		
+		//when
+		Validator validator = new BishopValidator(from, to, board, Color.WHITE);
+		
+		//then
+		Move move = validator.validate();
+	}
+	
+	@Test(expected = SpaceBetweenNotEmpty.class)
+	public void shouldThrowExceptionWhenMoveBlocked3() throws InvalidMoveException {
+		// given
+		Board board = new Board();
+		board.setPieceAt(Piece.WHITE_BISHOP, new Coordinate(4, 4));
+		board.setPieceAt(Piece.BLACK_ROOK, new Coordinate(3, 3));
+		Coordinate from = new Coordinate(4, 4);
+		Coordinate to = new Coordinate(0, 0);
+		
+		//when
+		Validator validator = new BishopValidator(from, to, board, Color.WHITE);
+		
+		//then
+		Move move = validator.validate();
+	}
+	
+	@Test(expected = SpaceBetweenNotEmpty.class)
+	public void shouldThrowExceptionWhenMoveBlocked4() throws InvalidMoveException {
+		// given
+		Board board = new Board();
+		board.setPieceAt(Piece.WHITE_BISHOP, new Coordinate(4, 4));
+		board.setPieceAt(Piece.BLACK_ROOK, new Coordinate(5, 3));
+		Coordinate from = new Coordinate(4, 4);
+		Coordinate to = new Coordinate(7, 1);
+		
+		//when
+		Validator validator = new BishopValidator(from, to, board, Color.WHITE);
+		
+		//then
+		Move move = validator.validate();
 	}
 }

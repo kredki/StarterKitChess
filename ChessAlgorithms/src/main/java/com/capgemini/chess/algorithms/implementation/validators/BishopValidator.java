@@ -55,19 +55,75 @@ public class BishopValidator implements Validator {
 		}
 	}
 
-	private void validateXPlusYPlus() {
-
+	private void validateXPlusYPlus() throws SpaceBetweenNotEmpty {
+		int xFrom = this.from.getX();
+		int yFrom = this.from.getY();
+		int xTo = this.to.getX();
+		int yTo = this.to.getY();
+		
+		int x = xFrom + 1;
+		int y = yFrom + 1;
+		while(x < xTo && y < yTo) {
+			Piece pieceBetween = this.board.getPieceAt(new Coordinate(x, y));
+			if(pieceBetween != null) {
+				throw new SpaceBetweenNotEmpty();
+			}
+			x++;
+			y++;
+		}
 	}
 
-	private void validateXPlusYMinus() {
-
+	private void validateXPlusYMinus() throws SpaceBetweenNotEmpty {
+		int xFrom = this.from.getX();
+		int yFrom = this.from.getY();
+		int xTo = this.to.getX();
+		int yTo = this.to.getY();
+		
+		int x = xFrom + 1;
+		int y = yFrom - 1;
+		while(x < xTo && y > yTo) {
+			Piece pieceBetween = this.board.getPieceAt(new Coordinate(x, y));
+			if(pieceBetween != null) {
+				throw new SpaceBetweenNotEmpty();
+			}
+			x++;
+			y--;
+		}
 	}
 	
-	private void validateXMinusYPlus() {
-
+	private void validateXMinusYPlus() throws SpaceBetweenNotEmpty {
+		int xFrom = this.from.getX();
+		int yFrom = this.from.getY();
+		int xTo = this.to.getX();
+		int yTo = this.to.getY();
+		
+		int x = xFrom - 1;
+		int y = yFrom + 1;
+		while(x > xTo && y < yTo) {
+			Piece pieceBetween = this.board.getPieceAt(new Coordinate(x, y));
+			if(pieceBetween != null) {
+				throw new SpaceBetweenNotEmpty();
+			}
+			x--;
+			y++;
+		}
 	}
 	
-	private void validateXMinusYMinus() {
-
+	private void validateXMinusYMinus() throws SpaceBetweenNotEmpty {
+		int xFrom = this.from.getX();
+		int yFrom = this.from.getY();
+		int xTo = this.to.getX();
+		int yTo = this.to.getY();
+		
+		int x = xFrom - 1;
+		int y = yFrom - 1;
+		while(x > xTo && y > yTo) {
+			Piece pieceBetween = this.board.getPieceAt(new Coordinate(x, y));
+			if(pieceBetween != null) {
+				throw new SpaceBetweenNotEmpty();
+			}
+			x--;
+			y--;
+		}
 	}
 }

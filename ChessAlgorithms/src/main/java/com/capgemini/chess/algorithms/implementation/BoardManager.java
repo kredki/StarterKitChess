@@ -241,6 +241,20 @@ public class BoardManager {
 	private boolean isKingInCheck(Color kingColor) {
 
 		// TODO please add implementation here
+		ValidatorFactory factory = new ValidatorFactory(null, null, this.board, kingColor);
+		List<Validator> validators = factory.getAfterMoveValidators(null);
+		for (Validator validator : validators) {
+			boolean kingInCheck = false;
+			try {
+				validator.validate();
+				kingInCheck = true;
+			} catch (InvalidMoveException e) {
+				System.out.println("king not in check for this figure");
+			}
+			if (kingInCheck) {
+				return true;
+			}
+		}
 		return false;
 	}
 

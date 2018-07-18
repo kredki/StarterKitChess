@@ -28,9 +28,11 @@ public class ValidatorFactory {
 		this.actualPlayerColor = actualPlayerColor;
 	}
 
-	public List<Validator> getValidators() {
+	public List<Validator> getValidators() throws InvalidMoveException {
+		Validator validator = new CoordinatesValidator(this.from, this.to);
+		validator.validate();
+
 		List<Validator> validators = new ArrayList<>();
-		validators.add(new CoordinatesValidator(this.from, this.to));
 		validators.add(new PieceIsThereValidator(this.from, this.board));
 		validators.add(new PieceColorValidator(this.from, this.board, this.actualPlayerColor));
 		validators.add(new OccupiedByMyPieceValidator(this.to, this.board, this.actualPlayerColor));
@@ -67,32 +69,34 @@ public class ValidatorFactory {
 		}
 		return validator;
 	}
-	
+
 	public List<Validator> getAfterMoveValidators(Move move) {
 		List<Validator> validators = new ArrayList<>();
 		Board afterMoveBoard = copyBoard();
-		Coordinate copyFrom = move.getFrom();
-		Coordinate copyTo = move.getTo();
-		afterMoveBoard.setPieceAt(null, copyFrom);
-		afterMoveBoard.setPieceAt(move.getMovedPiece(), copyTo);
+		if (move != null) {
+			Coordinate copyFrom = move.getFrom();
+			Coordinate copyTo = move.getTo();
+			afterMoveBoard.setPieceAt(null, copyFrom);
+			afterMoveBoard.setPieceAt(move.getMovedPiece(), copyTo);
+		}
 		Color opponentsColor = getOpponentsColor();
 		Coordinate myKingCoordinate = afterMoveBoard.getKingCoordinates(this.actualPlayerColor);
-		
+
 		for (int x = BOARD_MIN_SIZE; x <= BOARD_MAX_SIZE; x++) {
 			for (int y = BOARD_MIN_SIZE; y <= BOARD_MAX_SIZE; y++) {
 				Coordinate coordinate = new Coordinate(x, y);
 				Piece piece = afterMoveBoard.getPieceAt(coordinate);
-				if(piece != null && !piece.getColor().equals(this.actualPlayerColor)
+				if (piece != null && !piece.getColor().equals(this.actualPlayerColor)
 						&& !piece.getType().equals(PieceType.KING)) {
-					Validator validator = getPieceValidator(coordinate, myKingCoordinate,
-							afterMoveBoard, piece.getType(), opponentsColor);
+					Validator validator = getPieceValidator(coordinate, myKingCoordinate, afterMoveBoard,
+							piece.getType(), opponentsColor);
 					validators.add(validator);
 				}
 			}
 		}
 		return validators;
 	}
-	
+
 	private Board copyBoard() {
 		Board copiedBoard = new Board();
 		for (int x = BOARD_MIN_SIZE; x <= BOARD_MAX_SIZE; x++) {
@@ -104,16 +108,16 @@ public class ValidatorFactory {
 		}
 		return copiedBoard;
 	}
-	
+
 	private Color getOpponentsColor() {
-		if(this.actualPlayerColor.equals(Color.WHITE)) {
+		if (this.actualPlayerColor.equals(Color.WHITE)) {
 			return Color.BLACK;
 		} else {
 			return Color.WHITE;
 		}
 	}
-	
-	private Validator getPieceValidator(Coordinate from, Coordinate to, Board board,  PieceType pieceType, Color color) {
+
+	private Validator getPieceValidator(Coordinate from, Coordinate to, Board board, PieceType pieceType, Color color) {
 		Validator validator = null;
 		switch (pieceType) {
 		case KING:

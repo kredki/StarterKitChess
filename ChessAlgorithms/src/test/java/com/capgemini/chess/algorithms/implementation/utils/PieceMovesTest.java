@@ -168,7 +168,7 @@ public class PieceMovesTest {
 	}
 	
 	@Test
-	public void shouldReturn14QueenMoves() throws InvalidMoveException {
+	public void shouldReturn21QueenMoves() throws InvalidMoveException {
 		// given
 		PieceType pieceType = PieceType.QUEEN;
 		Coordinate pieceCoordinates = new Coordinate(0, 0);
@@ -178,7 +178,7 @@ public class PieceMovesTest {
 		List<Coordinate>moves = PieceMoves.getPossibleMoves(pieceType, pieceCoordinates, color);
 		
 		//then
-		assertEquals(14, moves.size());
+		assertEquals(21, moves.size());
 	}
 	
 	@Test

@@ -273,7 +273,7 @@ public class PieceMoves {
 	private static boolean isCoordinateOnBoard(Coordinate coordinate) {
 		int x = coordinate.getX();
 		int y = coordinate.getY();
-		if (x < BOARD_MAX_SIZE && x > BOARD_MIN_SIZE && y < BOARD_MAX_SIZE && y > BOARD_MIN_SIZE) {
+		if (x <= BOARD_MAX_SIZE && x >= BOARD_MIN_SIZE && y <= BOARD_MAX_SIZE && y >= BOARD_MIN_SIZE) {
 			return true;
 		} else {
 			return false;

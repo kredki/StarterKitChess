@@ -8,6 +8,7 @@ import com.capgemini.chess.algorithms.data.enums.Piece;
 import com.capgemini.chess.algorithms.data.generated.Board;
 import com.capgemini.chess.algorithms.implementation.Validator;
 import com.capgemini.chess.algorithms.implementation.exceptions.InvalidMoveException;
+import com.capgemini.chess.algorithms.implementation.exceptions.SpaceBetweenNotEmpty;
 
 public class QueenValidator implements Validator {
 	private Coordinate from;
@@ -29,6 +30,7 @@ public class QueenValidator implements Validator {
 		int deltaY = Math.abs(this.to.getY() - this.from.getY());
 		if (((deltaX == 0 && deltaY > 0) || (deltaX > 0 && deltaY == 0)) ||
 				(deltaX == deltaY)) {
+			validateSpacesBetween();
 			Piece pieceAtTo = board.getPieceAt(to);
 			if(pieceAtTo != null) {
 				return new Move(from, to, MoveType.CAPTURE, board.getPieceAt(from));
@@ -40,4 +42,161 @@ public class QueenValidator implements Validator {
 		}
 	}
 
+	private void validateSpacesBetween() throws SpaceBetweenNotEmpty {
+		int deltaX = this.to.getX() - this.from.getX();
+		int deltaY = this.to.getY() - this.from.getY();
+		if (deltaX > 0 && deltaY > 0) {
+			validateXPlusYPlus();
+		} else if (deltaX > 0 && deltaY < 0) {
+			validateXPlusYMinus();
+		} else if (deltaX < 0 && deltaY > 0) {
+			validateXMinusYPlus();
+		} else if (deltaX < 0 && deltaY < 0) {
+			validateXMinusYMinus();
+		} else if(deltaX > 0 && deltaY == 0) {
+			validateXPlusYConst();
+		} else if(deltaX < 0 && deltaY == 0) {
+			validateXMinusYConst();
+		} else if(deltaX == 0 && deltaY > 0){
+			validateXConstYPlus();
+		} else { //deltaX == 0 && deltaY < 0
+			validateXConstYMinus();
+		}
+	}
+
+	private void validateXPlusYPlus() throws SpaceBetweenNotEmpty {
+		int xFrom = this.from.getX();
+		int yFrom = this.from.getY();
+		int xTo = this.to.getX();
+		int yTo = this.to.getY();
+		
+		int x = xFrom + 1;
+		int y = yFrom + 1;
+		while(x < xTo && y < yTo) {
+			Piece pieceBetween = this.board.getPieceAt(new Coordinate(x, y));
+			if(pieceBetween != null) {
+				throw new SpaceBetweenNotEmpty();
+			}
+			x++;
+			y++;
+		}
+	}
+
+	private void validateXPlusYMinus() throws SpaceBetweenNotEmpty {
+		int xFrom = this.from.getX();
+		int yFrom = this.from.getY();
+		int xTo = this.to.getX();
+		int yTo = this.to.getY();
+		
+		int x = xFrom + 1;
+		int y = yFrom - 1;
+		while(x < xTo && y > yTo) {
+			Piece pieceBetween = this.board.getPieceAt(new Coordinate(x, y));
+			if(pieceBetween != null) {
+				throw new SpaceBetweenNotEmpty();
+			}
+			x++;
+			y--;
+		}
+	}
+	
+	private void validateXMinusYPlus() throws SpaceBetweenNotEmpty {
+		int xFrom = this.from.getX();
+		int yFrom = this.from.getY();
+		int xTo = this.to.getX();
+		int yTo = this.to.getY();
+		
+		int x = xFrom - 1;
+		int y = yFrom + 1;
+		while(x > xTo && y < yTo) {
+			Piece pieceBetween = this.board.getPieceAt(new Coordinate(x, y));
+			if(pieceBetween != null) {
+				throw new SpaceBetweenNotEmpty();
+			}
+			x--;
+			y++;
+		}
+	}
+	
+	private void validateXMinusYMinus() throws SpaceBetweenNotEmpty {
+		int xFrom = this.from.getX();
+		int yFrom = this.from.getY();
+		int xTo = this.to.getX();
+		int yTo = this.to.getY();
+		
+		int x = xFrom - 1;
+		int y = yFrom - 1;
+		while(x > xTo && y > yTo) {
+			Piece pieceBetween = this.board.getPieceAt(new Coordinate(x, y));
+			if(pieceBetween != null) {
+				throw new SpaceBetweenNotEmpty();
+			}
+			x--;
+			y--;
+		}
+	}
+	
+	private void validateXPlusYConst() throws SpaceBetweenNotEmpty {
+		int xFrom = this.from.getX();
+		int yFrom = this.from.getY();
+		int xTo = this.to.getX();
+		
+		int x = xFrom + 1;
+		int y = yFrom;
+		while(x < xTo) {
+			Piece pieceBetween = this.board.getPieceAt(new Coordinate(x, y));
+			if(pieceBetween != null) {
+				throw new SpaceBetweenNotEmpty();
+			}
+			x++;
+		}
+	}
+	
+	private void validateXMinusYConst() throws SpaceBetweenNotEmpty {
+		int xFrom = this.from.getX();
+		int yFrom = this.from.getY();
+		int xTo = this.to.getX();
+		
+		int x = xFrom - 1;
+		int y = yFrom;
+		while(x > xTo) {
+			Piece pieceBetween = this.board.getPieceAt(new Coordinate(x, y));
+			if(pieceBetween != null) {
+				throw new SpaceBetweenNotEmpty();
+			}
+			x--;
+		}
+	}
+	
+	private void validateXConstYPlus() throws SpaceBetweenNotEmpty {
+		int xFrom = this.from.getX();
+		int yFrom = this.from.getY();
+		int yTo = this.to.getY();
+		
+		int x = xFrom;
+		int y = yFrom + 1;
+		while(y < yTo) {
+			Piece pieceBetween = this.board.getPieceAt(new Coordinate(x, y));
+			if(pieceBetween != null) {
+				throw new SpaceBetweenNotEmpty();
+			}
+			y++;
+		}
+	}
+	
+	private void validateXConstYMinus() throws SpaceBetweenNotEmpty {
+		int xFrom = this.from.getX();
+		int yFrom = this.from.getY();
+		int yTo = this.to.getY();
+		
+		int x = xFrom;
+		int y = yFrom - 1;
+		while(y > yTo) {
+			Piece pieceBetween = this.board.getPieceAt(new Coordinate(x, y));
+			if(pieceBetween != null) {
+				throw new SpaceBetweenNotEmpty();
+			}
+			y--;
+		}
+	}
 }

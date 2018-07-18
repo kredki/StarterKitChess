@@ -113,7 +113,7 @@ public class BishopValidatorTest {
 		Validator validator = new BishopValidator(from, to, board, Color.WHITE);
 		
 		//then
-		Move move = validator.validate();
+		validator.validate();
 	}
 	
 	@Test(expected = SpaceBetweenNotEmpty.class)
@@ -129,7 +129,7 @@ public class BishopValidatorTest {
 		Validator validator = new BishopValidator(from, to, board, Color.WHITE);
 		
 		//then
-		Move move = validator.validate();
+		validator.validate();
 	}
 	
 	@Test(expected = SpaceBetweenNotEmpty.class)
@@ -145,7 +145,7 @@ public class BishopValidatorTest {
 		Validator validator = new BishopValidator(from, to, board, Color.WHITE);
 		
 		//then
-		Move move = validator.validate();
+		validator.validate();
 	}
 	
 	@Test(expected = SpaceBetweenNotEmpty.class)
@@ -161,6 +161,6 @@ public class BishopValidatorTest {
 		Validator validator = new BishopValidator(from, to, board, Color.WHITE);
 		
 		//then
-		Move move = validator.validate();
+		validator.validate();
 	}
 }

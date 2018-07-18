@@ -269,12 +269,33 @@ public class BoardManager {
 				Coordinate coordinate = new Coordinate(x, y);
 				Piece piece = this.board.getPieceAt(coordinate);
 				if (piece != null && piece.getColor().equals(nextMoveColor)) {
-					// TODO
-					PieceMoves.getPossibleMoves(piece.getType(), coordinate, nextMoveColor);
+					List<Coordinate> possibleMoves = PieceMoves
+							.getPossibleMoves(piece.getType(), coordinate, nextMoveColor);
+					if(isAnyOfThoseMovesValid(possibleMoves, coordinate, nextMoveColor)) {
+						return true;
+					}
 				}
 			}
 		}
 
+		return false;
+	}
+	private boolean isAnyOfThoseMovesValid(List<Coordinate> possibleMoves, Coordinate from, Color color) {
+		for (Coordinate to : possibleMoves) {
+			ValidationManager validationManager = new ValidationManager(from, to,
+					this.board, color);
+			boolean movePossible = false;
+			try {
+				validationManager.validate();
+				movePossible = true;
+			} catch (InvalidMoveException e) {
+				System.out.println("move not possible");
+			}
+			
+			if (movePossible) {
+				return true;
+			}
+		}
 		return false;
 	}
 

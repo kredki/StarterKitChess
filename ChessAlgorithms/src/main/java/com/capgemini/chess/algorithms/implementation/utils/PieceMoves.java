@@ -1,14 +1,11 @@
 package com.capgemini.chess.algorithms.implementation.utils;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 import com.capgemini.chess.algorithms.data.Coordinate;
 import com.capgemini.chess.algorithms.data.enums.Color;
-import com.capgemini.chess.algorithms.data.enums.Piece;
 import com.capgemini.chess.algorithms.data.enums.PieceType;
-import com.capgemini.chess.algorithms.implementation.exceptions.SpaceBetweenNotEmpty;
 
 public class PieceMoves {
 	private final static int BOARD_MAX_SIZE = 7;

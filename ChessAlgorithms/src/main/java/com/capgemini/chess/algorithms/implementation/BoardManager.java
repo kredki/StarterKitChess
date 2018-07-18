@@ -13,6 +13,7 @@ import com.capgemini.chess.algorithms.data.enums.PieceType;
 import com.capgemini.chess.algorithms.data.generated.Board;
 import com.capgemini.chess.algorithms.implementation.exceptions.InvalidMoveException;
 import com.capgemini.chess.algorithms.implementation.exceptions.KingInCheckException;
+import com.capgemini.chess.algorithms.implementation.utils.PieceMoves;
 
 /**
  * Class for managing of basic operations on the Chess Board.
@@ -22,6 +23,8 @@ import com.capgemini.chess.algorithms.implementation.exceptions.KingInCheckExcep
  */
 public class BoardManager {
 
+	private static final int BOARD_MIN_SIZE = 0;
+	private static final int BOARD_MAX_SIZE = 7;
 	private Board board = new Board();
 
 	public BoardManager() {
@@ -261,6 +264,16 @@ public class BoardManager {
 	private boolean isAnyMoveValid(Color nextMoveColor) {
 
 		// TODO please add implementation here
+		for (int x = BOARD_MIN_SIZE; x <= BOARD_MAX_SIZE; x++) {
+			for (int y = BOARD_MIN_SIZE; y <= BOARD_MAX_SIZE; y++) {
+				Coordinate coordinate = new Coordinate(x, y);
+				Piece piece = this.board.getPieceAt(coordinate);
+				if (piece != null && piece.getColor().equals(nextMoveColor)) {
+					// TODO
+					PieceMoves.getPossibleMoves(piece.getType(), coordinate);
+				}
+			}
+		}
 
 		return false;
 	}

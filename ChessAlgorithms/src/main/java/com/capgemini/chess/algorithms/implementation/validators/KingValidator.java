@@ -8,8 +8,10 @@ import com.capgemini.chess.algorithms.data.enums.Color;
 import com.capgemini.chess.algorithms.data.enums.MoveType;
 import com.capgemini.chess.algorithms.data.enums.Piece;
 import com.capgemini.chess.algorithms.data.generated.Board;
+import com.capgemini.chess.algorithms.implementation.ValidationManager;
 import com.capgemini.chess.algorithms.implementation.Validator;
 import com.capgemini.chess.algorithms.implementation.exceptions.InvalidMoveException;
+import com.capgemini.chess.algorithms.implementation.exceptions.KingInCheckException;
 
 public class KingValidator implements Validator {
 	private Coordinate from;
@@ -66,7 +68,7 @@ public class KingValidator implements Validator {
 		if (this.from.getY() == WHITE_FIRST_ROW && this.from.getX() == WHITE_KING_START_X
 				&& this.from.getY() == WHITE_KING_START_Y && isSpacesEmptyForCastling()) {
 			checkWhiteHistory();
-			// todo check validation for passing space
+			validateCheckForPassingSpace();
 			return new Move(this.from, this.to, MoveType.CASTLING, this.board.getPieceAt(this.from));
 		}
 		throw new InvalidMoveException();
@@ -76,7 +78,7 @@ public class KingValidator implements Validator {
 		if (this.from.getY() == BLACK_FIRST_ROW && this.from.getX() == BLACK_KING_START_X
 				&& this.from.getY() == BLACK_KING_START_Y && isSpacesEmptyForCastling()) {
 			checkBlackHistory();
-			// todo check validation for passing space
+			validateCheckForPassingSpace();
 			return new Move(this.from, this.to, MoveType.CASTLING, this.board.getPieceAt(this.from));
 		}
 		throw new InvalidMoveException();
@@ -142,6 +144,25 @@ public class KingValidator implements Validator {
 					throw new InvalidMoveException();
 				}
 			}
+		}
+	}
+
+	private void validateCheckForPassingSpace() throws InvalidMoveException {
+		int y = this.to.getY();
+		int deltaX = this.to.getX() - this.from.getX();
+		int x;
+		if (deltaX > 0) {
+			x = this.to.getX() - 1;
+		} else {
+			x = this.to.getX() + 1;
+		}
+		Coordinate passingSpace = new Coordinate(x, y);
+		ValidationManager validationManager = new ValidationManager(this.from, passingSpace, this.board,
+				this.actualPlayerColor);
+		try {
+			validationManager.validate();
+		} catch (KingInCheckException e) {
+			throw new InvalidMoveException();
 		}
 	}
 }

@@ -27,6 +27,8 @@ public class PawnValidator implements Validator {
 	private static final int DELTA_Y_BLACK_CAPTURE = -1;
 	private static final int DELTA_X_BLACK_FIRST_MOVE = 0;
 	private static final int DELTA_Y_BLACK_FIRST_MOVE = -2;
+	private static final int WHITE_FIRST_ROW = 1;
+	private static final int BLACK_FIRST_ROW = 6;
 
 	public PawnValidator(Coordinate from, Coordinate to, Board board, Color actualPlayerColor) {
 		super();
@@ -66,7 +68,8 @@ public class PawnValidator implements Validator {
 	}
 
 	private boolean isWhiteAttack(int deltaX, int deltaY) {
-		return (deltaX == DELTA_X_WHITE_ATTACK && deltaY == DELTA_Y_WHITE_ATTACK && board.getPieceAt(this.to) == null);
+		return (deltaX == DELTA_X_WHITE_ATTACK && deltaY == DELTA_Y_WHITE_ATTACK
+				&& board.getPieceAt(this.to) == null);
 	}
 
 	private boolean isWhiteCapture(int absDeltaX, int deltaY) {
@@ -75,8 +78,8 @@ public class PawnValidator implements Validator {
 	}
 
 	private boolean isWhiteFirstMove(int deltaX, int deltaY) {
-		return (deltaY == DELTA_Y_WHITE_FIRST_MOVE && deltaX == DELTA_X_WHITE_FIRST_MOVE
-				&& board.getPieceAt(this.to) == null);
+		return (this.from.getY() == WHITE_FIRST_ROW && deltaY == DELTA_Y_WHITE_FIRST_MOVE
+				&& deltaX == DELTA_X_WHITE_FIRST_MOVE && board.getPieceAt(this.to) == null);
 	}
 
 	private boolean isSpaceBetweenEmpty(Color color) {
@@ -120,7 +123,8 @@ public class PawnValidator implements Validator {
 	}
 
 	private boolean isBlackAttack(int deltaX, int deltaY) {
-		return (deltaX == DELTA_X_BLACK_ATTACK && deltaY == DELTA_Y_BLACK_ATTACK && board.getPieceAt(this.to) == null);
+		return (deltaX == DELTA_X_BLACK_ATTACK && deltaY == DELTA_Y_BLACK_ATTACK
+				&& board.getPieceAt(this.to) == null);
 	}
 
 	private boolean isBlackCapture(int absDeltaX, int deltaY) {
@@ -129,7 +133,7 @@ public class PawnValidator implements Validator {
 	}
 
 	private boolean isBlackFirstMove(int deltaX, int deltaY) {
-		return (deltaY == DELTA_Y_BLACK_FIRST_MOVE && deltaX == DELTA_X_BLACK_FIRST_MOVE
-				&& board.getPieceAt(this.to) == null);
+		return (this.from.getY() == BLACK_FIRST_ROW && deltaY == DELTA_Y_BLACK_FIRST_MOVE
+				&& deltaX == DELTA_X_BLACK_FIRST_MOVE && board.getPieceAt(this.to) == null);
 	}
 }

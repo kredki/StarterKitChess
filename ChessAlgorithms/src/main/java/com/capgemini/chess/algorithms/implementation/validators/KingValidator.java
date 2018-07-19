@@ -1,5 +1,7 @@
 package com.capgemini.chess.algorithms.implementation.validators;
 
+import java.util.List;
+
 import com.capgemini.chess.algorithms.data.Coordinate;
 import com.capgemini.chess.algorithms.data.Move;
 import com.capgemini.chess.algorithms.data.enums.Color;
@@ -21,6 +23,10 @@ public class KingValidator implements Validator {
 	private static final int WHITE_KING_START_Y = 0;
 	private static final int BLACK_KING_START_X = 4;
 	private static final int BLACK_KING_START_Y = 7;
+	private static final int KING_START_Y = 4;
+	private static final int BOARD_MAX_SIZE = 7;
+	private static final int BOARD_MIN_SIZE = 0;
+	private static final int KING_START_X = 4;
 
 	public KingValidator(Coordinate from, Coordinate to, Board board, Color actualPlayerColor) {
 		super();
@@ -77,17 +83,65 @@ public class KingValidator implements Validator {
 	}
 
 	private boolean isSpacesEmptyForCastling() {
-		// todo
-		return false;
+		int deltaX = this.to.getX() - this.from.getX();
+		int y = this.from.getY();
+		if (deltaX > 0) {
+			for (int x = KING_START_X + 1; x < BOARD_MAX_SIZE; x++) {
+				if (this.board.getPieceAt(new Coordinate(x, y)) != null) {
+					return false;
+				}
+			}
+		} else {
+			for (int x = KING_START_X + 1; x > BOARD_MIN_SIZE; x++) {
+				if (this.board.getPieceAt(new Coordinate(x, y)) != null) {
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 
 	private void checkWhiteHistory() throws InvalidMoveException {
-		// todo
-		throw new InvalidMoveException();
+		int deltaX = this.to.getX() - this.from.getX();
+		List<Move> moveHistory = this.board.getMoveHistory();
+		if (deltaX > 0) {
+			for (Move move : moveHistory) {
+				int x = move.getFrom().getX();
+				int y = move.getFrom().getY();
+				if (y == BOARD_MIN_SIZE && (x == BOARD_MAX_SIZE || x == WHITE_KING_START_X)) {
+					throw new InvalidMoveException();
+				}
+			}
+		} else {
+			for (Move move : moveHistory) {
+				int x = move.getFrom().getX();
+				int y = move.getFrom().getY();
+				if (y == BOARD_MIN_SIZE && (x == BOARD_MIN_SIZE || x == WHITE_KING_START_X)) {
+					throw new InvalidMoveException();
+				}
+			}
+		}
 	}
 
 	private void checkBlackHistory() throws InvalidMoveException {
-		// todo
-		throw new InvalidMoveException();
+		int deltaX = this.to.getX() - this.from.getX();
+		List<Move> moveHistory = this.board.getMoveHistory();
+		if (deltaX > 0) {
+			for (Move move : moveHistory) {
+				int x = move.getFrom().getX();
+				int y = move.getFrom().getY();
+				if (y == BOARD_MAX_SIZE && (x == BOARD_MAX_SIZE || x == WHITE_KING_START_X)) {
+					throw new InvalidMoveException();
+				}
+			}
+		} else {
+			for (Move move : moveHistory) {
+				int x = move.getFrom().getX();
+				int y = move.getFrom().getY();
+				if (y == BOARD_MAX_SIZE && (x == BOARD_MIN_SIZE || x == WHITE_KING_START_X)) {
+					throw new InvalidMoveException();
+				}
+			}
+		}
 	}
 }

@@ -94,7 +94,7 @@ public class KingValidator implements Validator {
 				}
 			}
 		} else {
-			for (int x = KING_START_X + 1; x > BOARD_MIN_SIZE; x++) {
+			for (int x = KING_START_X - 1; x > BOARD_MIN_SIZE; x--) {
 				if (this.board.getPieceAt(new Coordinate(x, y)) != null) {
 					return false;
 				}

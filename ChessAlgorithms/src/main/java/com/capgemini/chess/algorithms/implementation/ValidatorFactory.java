@@ -96,15 +96,7 @@ public class ValidatorFactory {
 			afterMoveBoard.setPieceAt(null, copyFrom);
 			afterMoveBoard.setPieceAt(move.getMovedPiece(), copyTo);
 			if (move.getType().equals(MoveType.EN_PASSANT)) {
-				int x = copyTo.getX();
-				int y;
-				if (move.getMovedPiece().getColor().equals(Color.WHITE)) {
-					y = copyTo.getY() - 1;
-				} else {
-					y = copyTo.getY() + 1;
-				}
-				Coordinate opponentsPawnCoordinate = new Coordinate(x, y);
-				afterMoveBoard.setPieceAt(null, opponentsPawnCoordinate);
+				moveOpponentPawn(move, afterMoveBoard, copyTo);
 			}
 
 			if (move.getType().equals(MoveType.CASTLING)) {
@@ -127,6 +119,18 @@ public class ValidatorFactory {
 			}
 		}
 		return validators;
+	}
+
+	private void moveOpponentPawn(Move move, Board destBoard, Coordinate to) {
+		int x = to.getX();
+		int y;
+		if (move.getMovedPiece().getColor().equals(Color.WHITE)) {
+			y = to.getY() - 1;
+		} else {
+			y = to.getY() + 1;
+		}
+		Coordinate opponentsPawnCoordinate = new Coordinate(x, y);
+		destBoard.setPieceAt(null, opponentsPawnCoordinate);
 	}
 
 	private void moveCastlingRook(Board destBoard, Move castlingMove) {

@@ -6,12 +6,23 @@ import java.util.List;
 import com.capgemini.chess.algorithms.data.Coordinate;
 import com.capgemini.chess.algorithms.data.Move;
 import com.capgemini.chess.algorithms.data.enums.Color;
+import com.capgemini.chess.algorithms.data.enums.MoveType;
 import com.capgemini.chess.algorithms.data.enums.Piece;
 import com.capgemini.chess.algorithms.data.enums.PieceType;
 import com.capgemini.chess.algorithms.data.generated.Board;
 import com.capgemini.chess.algorithms.implementation.exceptions.InvalidMoveException;
 import com.capgemini.chess.algorithms.implementation.exceptions.PieceNotThereException;
-import com.capgemini.chess.algorithms.implementation.validators.*;
+import com.capgemini.chess.algorithms.implementation.validators.BishopValidator;
+import com.capgemini.chess.algorithms.implementation.validators.CoordinatesValidator;
+import com.capgemini.chess.algorithms.implementation.validators.KingOnToValidator;
+import com.capgemini.chess.algorithms.implementation.validators.KingValidator;
+import com.capgemini.chess.algorithms.implementation.validators.KnightValidator;
+import com.capgemini.chess.algorithms.implementation.validators.OccupiedByMyPieceValidator;
+import com.capgemini.chess.algorithms.implementation.validators.PawnValidator;
+import com.capgemini.chess.algorithms.implementation.validators.PieceColorValidator;
+import com.capgemini.chess.algorithms.implementation.validators.PieceIsThereValidator;
+import com.capgemini.chess.algorithms.implementation.validators.QueenValidator;
+import com.capgemini.chess.algorithms.implementation.validators.RookValidator;
 
 public class ValidatorFactory {
 	private Coordinate from;
@@ -84,6 +95,17 @@ public class ValidatorFactory {
 			Coordinate copyTo = move.getTo();
 			afterMoveBoard.setPieceAt(null, copyFrom);
 			afterMoveBoard.setPieceAt(move.getMovedPiece(), copyTo);
+			if (move.getType().equals(MoveType.EN_PASSANT)) {
+				int x = copyTo.getX();
+				int y;
+				if (move.getMovedPiece().getColor().equals(Color.WHITE)) {
+					y = copyTo.getY() - 1;
+				} else {
+					y = copyTo.getY() + 1;
+				}
+				Coordinate opponentsPawnCoordinate = new Coordinate(x, y);
+				afterMoveBoard.setPieceAt(null, opponentsPawnCoordinate);
+			}
 		}
 		Color opponentsColor = getOpponentsColor();
 		Coordinate myKingCoordinate = afterMoveBoard.getKingCoordinates(this.actualPlayerColor);

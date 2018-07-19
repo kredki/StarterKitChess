@@ -10,6 +10,7 @@ import com.capgemini.chess.algorithms.data.enums.Piece;
 import com.capgemini.chess.algorithms.data.enums.PieceType;
 import com.capgemini.chess.algorithms.data.generated.Board;
 import com.capgemini.chess.algorithms.implementation.exceptions.InvalidMoveException;
+import com.capgemini.chess.algorithms.implementation.exceptions.PieceNotThereException;
 import com.capgemini.chess.algorithms.implementation.validators.*;
 
 public class ValidatorFactory {
@@ -41,9 +42,14 @@ public class ValidatorFactory {
 		return validators;
 	}
 
-	private Validator getPieceValidator() {
+	private Validator getPieceValidator() throws PieceNotThereException {
 		Validator validator = null;
-		PieceType pieceType = board.getPieceAt(this.from).getType();
+		PieceType pieceType;
+		try {
+			pieceType = board.getPieceAt(this.from).getType();
+		} catch (Exception e) {
+			throw new PieceNotThereException();
+		}
 		switch (pieceType) {
 		case KING:
 			validator = new KingValidator(this.from, this.to, this.board, this.actualPlayerColor);

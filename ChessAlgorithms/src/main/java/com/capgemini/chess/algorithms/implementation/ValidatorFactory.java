@@ -106,6 +106,10 @@ public class ValidatorFactory {
 				Coordinate opponentsPawnCoordinate = new Coordinate(x, y);
 				afterMoveBoard.setPieceAt(null, opponentsPawnCoordinate);
 			}
+
+			if (move.getType().equals(MoveType.CASTLING)) {
+				moveCastlingRook(afterMoveBoard, move);
+			}
 		}
 		Color opponentsColor = getOpponentsColor();
 		Coordinate myKingCoordinate = afterMoveBoard.getKingCoordinates(this.actualPlayerColor);
@@ -123,6 +127,27 @@ public class ValidatorFactory {
 			}
 		}
 		return validators;
+	}
+
+	private void moveCastlingRook(Board destBoard, Move castlingMove) {
+		int deltaX = castlingMove.getTo().getX() - castlingMove.getFrom().getX();
+		Coordinate moveRookFrom;
+		Coordinate moveRookTo;
+		int y = castlingMove.getTo().getY();
+		if (deltaX > 0) {
+			moveRookFrom = new Coordinate(BOARD_MAX_SIZE, y);
+			moveRookTo = new Coordinate(5, y);
+		} else {
+			moveRookFrom = new Coordinate(BOARD_MIN_SIZE, y);
+			moveRookTo = new Coordinate(3, y);
+		}
+		movePiece(destBoard, moveRookFrom, moveRookTo);
+	}
+
+	private void movePiece(Board board, Coordinate from, Coordinate to) {
+		Piece movedPiece = board.getPieceAt(from);
+		board.setPieceAt(null, from);
+		board.setPieceAt(movedPiece, to);
 	}
 
 	private Board copyBoard() {
